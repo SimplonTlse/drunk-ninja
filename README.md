@@ -1,6 +1,16 @@
 Coding Apéro - Ninja !
 ==============================
 
+
+Install
+---
+- clone !
+- composer install
+
+Usage
+---
+```php artisan ninja```
+
 ## Le pitch
 
 Un ninja veut devenir le meilleur au lancer de shurikens.
