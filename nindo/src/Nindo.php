@@ -57,15 +57,22 @@ class Nindo {
 		return $this->shuriken > 0;
 	}
 
+	private function ascii() {
+		return file_get_contents(base_path("naruto.txt"));
+	}
+
 	public function __toString() {
+
 		$isHokage = $this->finaluScolu > 0 ? "Tsugi no kage ni narimasu !!!!! Hoy !!!!! \o/ " : "Unko desu :((";
+		$ascii = $this->finaluScolu > 0 ? $this->ascii() : "";
 		return "\n\n====================\nMin rand success : {$this->lucky}\n  
 Success points: {$this->successBasePoints}\n
 Fail Points : {$this->failBasePoints } \n
 Startu Surikens : {$this->startShuriken} \n
 Finaru Scoru : {$this->finaluScolu} \n
 ====================\n
-\n\n\n{$isHokage}\n";
-	}
+\n\n\n{$isHokage}\n
+\n{$ascii}";
+	} 
 }
 
