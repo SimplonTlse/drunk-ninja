@@ -11,12 +11,13 @@ class Nindo {
 	private $kinkouyousanjousuu;
 	private $succesiveHitu;
 	private $succesiveFailu;
+	private $startShuriken;
 
 	public function __construct($lucky) {
 		$this->lucky = 10 - $lucky; 
 		$this->successBasePoints = 1;
 		$this->failBasePoints = 10;
-		$this->shuriken = 60;
+		$this->shuriken = $this->startShuriken = 60;
 		$this->toreningu();
 	}
 
@@ -52,24 +53,19 @@ class Nindo {
 		$this->succesiveHitu = 0;
 	}
 
-	private function setKinkouyousanjousuu() {
-		if ($this->lastHitu) {
-
-		}
-	}
-
 	private function hasShurikens(){
 		return $this->shuriken > 0;
 	}
 
 	public function __toString() {
 		$isHokage = $this->finaluScolu > 0 ? "Tsugi no kage ni narimasu !!!!! Hoy !!!!! \o/ " : "Unko desu :((";
-		return " Min rand success : {$this->lucky} \n  
-		Success points: {$this->successBasePoints}
-		Fail Points : {$this->failBasePoints } \n
-		Startu Surikens : {$this->shuriken} \n
-		Finaru Scoru : {$this->finaluScolu} \n ====================
-		\n\n\n\n{$isHokage}\n";
+		return "\n\n====================\nMin rand success : {$this->lucky}\n  
+Success points: {$this->successBasePoints}\n
+Fail Points : {$this->failBasePoints } \n
+Startu Surikens : {$this->startShuriken} \n
+Finaru Scoru : {$this->finaluScolu} \n
+====================\n
+\n\n\n{$isHokage}\n";
 	}
 }
 
