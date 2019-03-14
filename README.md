@@ -4,8 +4,8 @@ Coding Apéro - Ninja !
 
 Install
 ---
-- clone !
-- composer install
+- git clone this repo !
+- `composer install`
 
 Usage
 ---
