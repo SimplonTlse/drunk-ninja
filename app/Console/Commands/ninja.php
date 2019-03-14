@@ -37,6 +37,6 @@ class ninja extends Command
      */
     public function handle()
     {
-        echo 'Naruto is life! Ninjaaaaaaaaaaaaaaa!'; 
+        echo 'Naruto is life! Ninjaaaaaaaaaaaaaaa! Ceci est mon nindo !'; 
     }
 }
