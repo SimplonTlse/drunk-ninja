@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Nindo\Nindo;
 
 class ninja extends Command
 {
@@ -37,6 +38,7 @@ class ninja extends Command
      */
     public function handle()
     {
+        echo new Nindo;
         echo 'Naruto is life! Ninjaaaaaaaaaaaaaaa! Ceci est mon nindo !'; 
     }
 }
