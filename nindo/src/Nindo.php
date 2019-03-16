@@ -12,18 +12,21 @@ class Nindo {
 	private $succesiveHitu;
 	private $succesiveFailu;
 	private $startShuriken;
+	private $launches = 0;
+	private $logged;
 
-	public function __construct($lucky) {
-		$this->lucky = 10 - $lucky; 
-		$this->successBasePoints = 1;
-		$this->failBasePoints = 10;
-		$this->shuriken = $this->startShuriken = 60;
+	public function __construct($efficiency = 70, $shurikens = 60, $successPoints = 1, $failPoints = 10) {
+		$this->lucky = 100 - $efficiency; 
+		$this->successBasePoints = $successPoints;
+		$this->failBasePoints = $failPoints;
+		$this->shuriken = $this->startShuriken = $shurikens;
 		$this->toreningu();
 	}
 
 	private function toreningu () {
 		while ($this->hasShurikens()) {
 			$succesu = $this->hajime();
+			$this->launches++;
 			if ($succesu) {
 				$this->izuGoaru();
 			} else {
@@ -33,13 +36,13 @@ class Nindo {
 	}
 
 	private function hajime() {
-		$r = random_int(0,10);
+		$r = random_int(0,100);
 		$this->shuriken--;
 		return $this->lucky <= $r;
 	}
 
 	private function izuGoaru() {
-		echo "Yatta !  Currentu Scolu {$this->finaluScolu}, consecutive yatta : {$this->succesiveHitu}\n";
+		$this->log("Yatta !  Currentu Scolu {$this->finaluScolu}, consecutive yatta : {$this->succesiveHitu}", true);
 		$this->shuriken++;
 		$this->succesiveHitu++;
 		$this->finaluScolu += $this->successBasePoints * $this->succesiveHitu;
@@ -47,7 +50,7 @@ class Nindo {
 	}
 
 	private function bakaDesu() {
-		echo "Baaaaaaka !!!!!!!!!!!!! Currentu Scolu {$this->finaluScolu}, consecutive yatta : {$this->succesiveFailu}\n";
+		$this->log("Baaaaaaka !!!!!!! Currentu Scolu {$this->finaluScolu}, consecutive yatta : {$this->succesiveFailu}", false);
 		$this->succesiveFailu++;
 		$this->finaluScolu -= $this->failBasePoints * $this->succesiveFailu;
 		$this->succesiveHitu = 0;
@@ -61,18 +64,34 @@ class Nindo {
 		return file_get_contents(base_path("naruto.txt"));
 	}
 
+	private function log($msg, $success) {
+		$this->logged[] = (object)["msg"=>$msg, "success"=>$success];
+	}
+
+	public function hasWon() {
+		return $this->finaluScolu > 0;
+	}
+
+	public function getLog() {
+		return $this->logged;
+	}
+
 	public function __toString() {
 
-		$isHokage = $this->finaluScolu > 0 ? "Tsugi no kage ni narimasu !!!!! Hoy !!!!! \o/ " : "Unko desu :((";
-		$ascii = $this->finaluScolu > 0 ? $this->ascii() : "";
-		return "\n\n====================\nMin rand success : {$this->lucky}\n  
-Success points: {$this->successBasePoints}\n
-Fail Points : {$this->failBasePoints } \n
-Startu Surikens : {$this->startShuriken} \n
-Finaru Scoru : {$this->finaluScolu} \n
-====================\n
-\n\n\n{$isHokage}\n
-\n{$ascii}";
+		return join("\n",[
+			"====================",
+			"Min rand success : {$this->lucky}",  
+			"Success points: {$this->successBasePoints}",
+			"Fail Points : {$this->failBasePoints } ",
+			"Startu Surikens : {$this->startShuriken} ",
+			"Launched Surikens : {$this->launches} ",
+			"====================",
+			"Finaru Scoru : {$this->finaluScolu} ",
+			"====================",
+			"\n\n",
+			$this->finaluScolu > 0 ? "\o/ Tsugi no kage ni narimasu !!! Hoy !!!" : "Unko desu :(("
+		]);
+
 	} 
 }
 

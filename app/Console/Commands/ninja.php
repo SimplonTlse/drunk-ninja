@@ -12,7 +12,7 @@ class ninja extends Command
      *
      * @var string
      */
-    protected $signature = 'ninja';
+    protected $signature = 'ninja {--p|precision=70 : Percentage of landed  shots} {--s|shurikens=60 : Shurikens in pocket} {--S|success=1 : Points in case of landed shot} {--F|fail=10 : Substracted points in case of failed shot}';
 
     /**
      * The console command description.
@@ -21,6 +21,7 @@ class ninja extends Command
      */
     protected $description = 'Ninja stuff';
 
+    private $nindo;
     /**
      * Create a new command instance.
      *
@@ -38,6 +39,28 @@ class ninja extends Command
      */
     public function handle()
     {
-        echo new Nindo(7);
+        $this->nindo = new Nindo($this->option('precision'), $this->option('shurikens'), $this->option('success'), $this->option('fail'));
+
+
+        if ($this->option("verbose")) {
+            $this->verbose();    
+        }
+        
+
+        if ($this->nindo->hasWon()) {
+            $this->info($this->nindo);
+        } else {
+            $this->error($this->nindo);
+        }
+    }
+
+    private function verbose() {
+        foreach($this->nindo->getLog() as $line) {
+            if($line->success) {
+                $this->info($line->msg);
+            } else {
+                $this->error($line->msg);
+            }
+        }
     }
 }
