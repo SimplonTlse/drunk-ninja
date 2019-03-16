@@ -12,5 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+	$nindo = new Nindo\Nindo(
+		request()->input("efficiency"),
+		request()->input("shurikens"),
+		request()->input("success"),
+		request()->input("fail")
+	);
+	return view('welcome')->with('nindo', $nindo);
 });

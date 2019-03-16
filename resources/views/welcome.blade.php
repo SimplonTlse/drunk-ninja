@@ -20,6 +20,12 @@
                 margin: 0;
             }
 
+            main {
+                width: 80ch;
+                margin-left:auto;
+                margin-right: auto;
+            }
+
             .full-height {
                 height: 100vh;
             }
@@ -61,39 +67,54 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .success {
+                color: #2C905F;
+            }
+
+            .fail {
+                color:#A70F29;
+            }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+        <main>
+            <section>
+                <form action="/" method="get">
+                    <div>
+                        <label for="efficiency">Efficiency/Luck</label>
+                        <input name="efficiency" type="number" placeholder="70" value="{{request()->input('efficiency')}}">
+                    </div>
+                    <div>
+                        <label for="shurikens">Start Shurikens</label>
+                        <input type="number" placeholder="60" name="shurikens" value="{{request()->input('shurikens')}}">
+                    </div>
+                    <div>
+                        <label for="success">Success Points</label>
+                        <input type="number" placeholder="1" name="success" value="{{request()->input('success')}}">
+                    </div>
+                    <div>
+                        <label for="fail">Fail Points</label>
+                        <input type="number" name="fail" placeholder="10" value="{{request()->input('fail')}}">
+                    </div>
+                    <div>
+                        <button>Toreningu !</button>
+                    </div>
+                </form>
+            </section>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
+            @if(isset($nindo))
+
+            <h1>{{$nindo->result()}}</h1>
+            <section class="{{$nindo->hasWon() ? "success" : "fail"}}">
+                <pre>{{$nindo->getDetails()}}</pre>
+            </section>
+
+            <details>
+                @foreach($nindo->getLog() as $line)
+                    <div class="{{$line->success ? "success" : "fail"}}">{{$line->msg}}</div>
+                @endforeach
+            </details> 
             @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
+        </main>
     </body>
 </html>

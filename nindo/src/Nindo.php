@@ -16,6 +16,13 @@ class Nindo {
 	private $logged;
 
 	public function __construct($efficiency = 70, $shurikens = 60, $successPoints = 1, $failPoints = 10) {
+
+		$efficiency = !empty($efficiency) ?$efficiency : 70;
+		$shurikens = !empty($shurikens) ?$shurikens : 60;
+		$successPoints = !empty($successPoints) ?$successPoints : 1;
+		$failPoints = !empty($failPoints) ?$failPoints : 10;
+
+
 		$this->lucky = 100 - $efficiency; 
 		$this->successBasePoints = $successPoints;
 		$this->failBasePoints = $failPoints;
@@ -76,20 +83,36 @@ class Nindo {
 		return $this->logged;
 	}
 
-	public function __toString() {
+	public function result() {
+		return $this->finaluScolu > 0 
+			? "\o/ Tsugi no kage ni narimasu !!! Hoy !!!" 
+			: "Unko desu :((";
+	}
 
+	public function getDetails () {
 		return join("\n",[
-			"====================",
 			"Min rand success : {$this->lucky}",  
 			"Success points: {$this->successBasePoints}",
 			"Fail Points : {$this->failBasePoints } ",
 			"Startu Surikens : {$this->startShuriken} ",
 			"Launched Surikens : {$this->launches} ",
+		]);		
+	}
+
+	public function getScore() {
+		return $this->finaluScolu;
+	}
+
+	public function __toString() {
+
+		return join("\n",[
+			"====================",
+			$this->getDetails(),
 			"====================",
 			"Finaru Scoru : {$this->finaluScolu} ",
 			"====================",
 			"\n\n",
-			$this->finaluScolu > 0 ? "\o/ Tsugi no kage ni narimasu !!! Hoy !!!" : "Unko desu :(("
+			$this->result()
 		]);
 
 	} 
