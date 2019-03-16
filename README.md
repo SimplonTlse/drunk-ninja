@@ -6,10 +6,31 @@ Install
 ---
 - git clone this repo !
 - `composer install`
+- `cp .env.example .env`
+- `php artisan key:generate`
 
 Usage
 ---
+## CLI
 ```php artisan ninja```
+```
+Description:
+  Ninja stuff
+
+Usage:
+  ninja [options]
+
+Options:
+  -p, --precision[=PRECISION]  Percentage of landed  shots [default: "70"]
+  -s, --shurikens[=SHURIKENS]  Shurikens in pocket [default: "60"]
+  -S, --success[=SUCCESS]      Points in case of landed shot [default: "1"]
+  -F, --fail[=FAIL]            Substracted points in case of failed shot [default : "10"]
+  -v, --verbose					Log every attempt
+  ```
+
+## Web
+```php artisan serve```  
+Open your browser and have fun !
 
 ## Le pitch
 
